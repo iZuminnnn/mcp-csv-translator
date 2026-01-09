@@ -1,8 +1,6 @@
 use crate::utils::{CsvTranslatorError, Result};
 use csv::StringRecord;
 use std::path::Path;
-use tokio::fs::File;
-use tokio::io::{AsyncBufReadExt, BufReader};
 
 pub struct CsvStreamReader {
     path: String,
@@ -33,19 +31,9 @@ impl CsvStreamReader {
     }
 
     pub async fn count_rows(&self) -> Result<usize> {
-        let file = File::open(&self.path).await?;
-        let reader = BufReader::new(file);
-        let mut lines = reader.lines();
-        let mut count = 0;
-
-        while let Some(_) = lines.next_line().await? {
-            count += 1;
-        }
-
-        if count > 0 {
-            count -= 1;
-        }
-
+        let file = std::fs::File::open(&self.path)?;
+        let mut reader = csv::Reader::from_reader(file);
+        let count = reader.records().count();
         Ok(count)
     }
 
