@@ -1,0 +1,20 @@
+# Build
+/target/
+*.tar.gz
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data
+/data/*.redb
+/data/*.csv
+
+# Logs
+*.log

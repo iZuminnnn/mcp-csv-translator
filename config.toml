@@ -1,0 +1,33 @@
+[server]
+name = "csv-translator-mcp"
+version = "1.0.0"
+
+[translation]
+default_chunk_size = 500
+default_overlap_size = 50
+max_tokens_per_request = 120000
+max_concurrent_requests = 5
+
+[api]
+endpoint = "https://api.anthropic.com/v1/messages"
+model = "claude-3-5-sonnet-20241022"
+timeout_seconds = 120
+
+[checkpoint]
+auto_save_interval_seconds = 60
+auto_save_every_n_chunks = 5
+db_path = "./data/checkpoints.redb"
+
+[cleanup]
+session_ttl_days = 7
+cleanup_interval_hours = 1
+max_temp_files_mb = 500
+
+[pipeline]
+chunk_buffer_size = 10
+resequencer_buffer_size = 20
+failed_rows_output = "./data/failed_rows.json"
+
+[logging]
+level = "info"
+format = "json"
